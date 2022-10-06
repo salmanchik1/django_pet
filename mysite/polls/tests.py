@@ -20,7 +20,8 @@ class QuestionModelTests(TestCase):
 
     def test_was_published_recently_with_old_question(self):
         """
-        was_published_recently() returns False for questions whose pub_date is older than 1 day.
+        was_published_recently() returns False for questions whose pub_date
+        is older than 1 day.
         """
         time = timezone.now() - datetime.timedelta(days=1, seconds=1)
         old_question = Question(pub_date=time)
@@ -70,7 +71,8 @@ class QuestionIndexViewTests(TestCase):
 
     def test_future_question(self):
         """
-        Questions with a pub_date in the future aren't displayed on the index page.
+        Questions with a pub_date in the future aren't displayed on
+        the index page.
         """
         create_question(question_text="Future question.", days=30)
         response = self.client.get(reverse('polls:index'))
@@ -98,6 +100,6 @@ class QuestionIndexViewTests(TestCase):
         question2 = create_question(question_text="Past question 2.", days=-5)
         response = self.client.get(reverse('polls:index'))
         self.assertQuerysetEqual(
-            response.context['latest_question_list']
+            response.context['latest_question_list'],
             [question2, question1]
         )
